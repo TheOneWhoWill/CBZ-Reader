@@ -91,6 +91,10 @@ public class Library extends JFrame {
 	}
 
 	public static ArrayList<File> getFiles(File folder) {
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
+
 		ArrayList<File> files = new ArrayList<File>();
 
 		for (File file : folder.listFiles()) {
