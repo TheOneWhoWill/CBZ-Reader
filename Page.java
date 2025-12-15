@@ -8,7 +8,7 @@ public class Page extends JPanel {
         this.currentPage = page;
 
         setSize(page.getWidth(null), getHeight());
-        setBackground(Color.LIGHT_GRAY);
+        setBackground(Color.BLACK);
 
         ((FlowLayout) getLayout()).setVgap(0);
     }
