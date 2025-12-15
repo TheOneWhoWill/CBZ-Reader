@@ -18,6 +18,14 @@ public class Page extends JPanel {
         paint(getGraphics());
     }
 
+    public int getPageWidth() {
+        return currentPage.getWidth(null);
+    }
+
+    public int getPageHeight() {
+        return currentPage.getHeight(null);
+    }
+
     public void paint(Graphics g) {
         super.paint(g);
 

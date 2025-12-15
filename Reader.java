@@ -4,13 +4,13 @@ import java.awt.*;
 
 public class Reader extends JFrame implements KeyListener {
     private Manga book;
-    //private int lastPage = -1;
+    private int totalPages = 0;
     private int currentPage = 1;
     private Page pageImage = null;
 
     public Reader(Manga book) {
         this.book = book;
-        //lastPage = book.length();
+        totalPages = book.length();
         
         Toolkit tooklit = Toolkit.getDefaultToolkit();
         
@@ -24,11 +24,13 @@ public class Reader extends JFrame implements KeyListener {
             e.printStackTrace();
         }
 
+        setLayout(new BorderLayout());
         add(pageImage, BorderLayout.CENTER);
+
     }
 
 	private void updateTitle() {
-		setTitle(book.getName() + " - Page " + currentPage + " - Manga Viewer");
+		setTitle(book.getName() + " - Page " + currentPage + " of " + totalPages);
 	}
 
 	public void run() {
@@ -37,25 +39,28 @@ public class Reader extends JFrame implements KeyListener {
         setVisible(true);
 	}
 
-    public void keyTyped(KeyEvent e) {
-    }
+    public void keyTyped(KeyEvent e) {}
     public void keyPressed(KeyEvent e) {
 
 		boolean isRight = e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D;
 		boolean isLeft = e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A;
 
-        if(isRight && currentPage + 1 < book.length()) {
+        if(isRight && currentPage + 1 < totalPages) {
             currentPage += 1;
 			pageImage.updatePage(book.getPage(currentPage));
-			updateTitle();
+        }
+        
+		if(isLeft && currentPage - 1 > 0) {
+            currentPage -= 1;
+			pageImage.updatePage(book.getPage(currentPage));
+		}
+
+        if (pageImage != null) {
+            pageImage.repaint();
         }
 
-		if(isLeft && currentPage - 1 > 0) {
-			currentPage -= 1;
-			pageImage.updatePage(book.getPage(currentPage));
-			updateTitle();
-		}
+        updateTitle();
     }
-
+    
     public void keyReleased(KeyEvent e) {}
 }
