@@ -61,6 +61,8 @@ public class Manga {
 			}
 		}
 
+		pages.sort(Comparator.naturalOrder());
+
 		return pages;
 	}
 
