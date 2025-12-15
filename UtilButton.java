@@ -25,27 +25,21 @@ public class UtilButton extends JButton implements ActionListener, MouseListener
 	public void actionPerformed(ActionEvent event) {
 		if(type == UPLOAD_CBZ) {
 			Library instace = Library.instace;
+			String title = instace.getTitle();
 
 			instace.setTitle("Uploading Manga... [Don't close the window]");
 
-			JFileChooser chooser = new JFileChooser();
+			FileDialog fileDialog = new FileDialog(instace, "Select CBZ Files", FileDialog.LOAD);
+			fileDialog.setVisible(true);
 
-			chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			chooser.setMultiSelectionEnabled(true);
-			// /chooser.setFileFilter(new CBZFilter());
-
-			int result = chooser.showOpenDialog(this);
-
-			if(result == JFileChooser.APPROVE_OPTION) {
-				File[] files = chooser.getSelectedFiles();
-
-				for(File file : files) {
-					Library.addManga(file.getPath(), removeExtensionName(file.getName()));
-				}
+			String directory = fileDialog.getDirectory();
+			String file = fileDialog.getFile();
+			if (file != null) {
+				Library.addManga(directory + file, removeExtensionName(file));
 			}
 
 			instace.refresh();
-			instace.setTitle("Manga Viewer");
+			instace.setTitle(title);
 		} else if(type == EXPORT_CBZ) {
 			new Export();
 		} else if(type == EXPORT_CBZ_REQUEST) {
